@@ -2,6 +2,7 @@ package com.topjava
 
 import com.topjava.model.Role
 import com.topjava.model.User
+import com.topjava.repository.jdbc.JdbcMealRepository
 import com.topjava.web.meal.MealRestController
 import com.topjava.web.user.AdminRestController
 import org.springframework.context.support.ClassPathXmlApplicationContext
@@ -10,17 +11,22 @@ import java.time.LocalTime
 import java.time.Month
 
 fun main() {
-    val appCtx = ClassPathXmlApplicationContext("spring/spring-app.xml")
+    val appCtx = ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml")
     appCtx.use {
         println(appCtx.beanDefinitionNames.contentToString())
 
+        val jdbcMealRepository = appCtx.getBean(JdbcMealRepository::class.java)
+        val allMealsForUser = jdbcMealRepository.getAll(100000)
+        println(allMealsForUser)
+
         val adminRestController = appCtx.getBean(AdminRestController::class.java)
         adminRestController.create(
-                User(id = null,
-                name = "userName",
-                email = "email@mail.ru",
-                password = "password",
-                roles =  setOf(Role.ROLE_ADMIN)))
+                User(null,
+                "userName",
+                "email@mail.ru",
+                "password",
+                        Role.ROLE_ADMIN,
+                        Role.ROLE_ADMIN))
         println()
         val allUsers = adminRestController.getAll()
         println(allUsers)

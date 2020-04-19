@@ -4,7 +4,7 @@ import com.topjava.model.Meal
 import java.time.LocalDateTime
 
 interface MealRepository {
-    fun save(meal: Meal, userId: Int): Meal
+    fun save(meal: Meal, userId: Int): Meal?
     fun delete(id: Int, userId: Int): Boolean
     fun get(id: Int, userId: Int): Meal?
     fun getAll(userId: Int): List<Meal>

@@ -1,6 +1,5 @@
 package com.topjava.web.meal
 
-import com.topjava.model.AbstractBaseEntity
 import com.topjava.model.Meal
 import org.slf4j.LoggerFactory
 import com.topjava.service.MealService
@@ -41,7 +40,7 @@ class MealRestController {
         return MealsUtil.getTos(service.getAll(userId), SecurityUtil.authUserCaloriesPerDay())
     }
 
-    fun create(meal: Meal): Meal {
+    fun create(meal: Meal): Meal? {
         val userId = SecurityUtil.authUserId()
         ValidationUtil.checkNew(meal)
         logger.info("create $meal for user $userId")

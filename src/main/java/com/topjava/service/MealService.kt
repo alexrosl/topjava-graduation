@@ -39,7 +39,7 @@ class MealService() {
         checkNotFoundWithId(repository.save(meal, userId), meal.id!!)
     }
 
-    fun create(meal: Meal, userId: Int): Meal {
+    fun create(meal: Meal, userId: Int): Meal? {
         return repository.save(meal, userId)
     }
 }
