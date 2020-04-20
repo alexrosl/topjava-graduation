@@ -4,6 +4,7 @@ import com.topjava.model.Meal
 import com.topjava.model.isNew
 import com.topjava.repository.MealRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.dao.support.DataAccessUtils
 import org.springframework.jdbc.core.BeanPropertyRowMapper
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
@@ -17,14 +18,6 @@ import javax.annotation.PostConstruct
 class JdbcMealRepository : MealRepository {
 
     private val ROW_MAPPER = BeanPropertyRowMapper.newInstance(Meal::class.java)
-//            RowMapper<Meal>() {
-//        rs: ResultSet, _: Int ->
-//        Meal(id = rs.getInt("id"),
-//            description = rs.getString("description"),
-//            dateTime = rs.getTimestamp("date_time").toLocalDateTime(),
-//            calories = rs.getInt("calories")
-//        )
-//    }
 
     @Autowired
     private lateinit var jdbcTemplate: JdbcTemplate
@@ -68,12 +61,12 @@ class JdbcMealRepository : MealRepository {
     }
 
     override fun delete(id: Int, userId: Int): Boolean {
-        return jdbcTemplate.update("DELETE FROM meals WHERE id=? AND user_id = ?", ROW_MAPPER, id, userId) != 0
+        return jdbcTemplate.update("DELETE FROM meals WHERE id=? AND user_id=?",  id, userId) != 0
     }
 
     override fun get(id: Int, userId: Int): Meal? {
-        val meals = jdbcTemplate.query("SELECT * FROM meals WHERE id = ? AND user_id = ?", ROW_MAPPER, id, userId)
-        return meals.first()
+        val meals = jdbcTemplate.query("SELECT * FROM meals WHERE id=? AND user_id=?", ROW_MAPPER, id, userId)
+        return DataAccessUtils.singleResult(meals)
     }
 
     override fun getAll(userId: Int): List<Meal> {
@@ -87,5 +80,4 @@ class JdbcMealRepository : MealRepository {
                 ROW_MAPPER, userId, startDate, endDate
         )
     }
-
 }

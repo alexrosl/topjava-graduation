@@ -9,6 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.Month
+import java.util.*
 
 fun main() {
     val appCtx = ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml")
@@ -20,10 +21,11 @@ fun main() {
         println(allMealsForUser)
 
         val adminRestController = appCtx.getBean(AdminRestController::class.java)
+        val email = "autotest${Random().nextInt(1000).toString()}@mail.ru"
         adminRestController.create(
                 User(null,
                 "userName",
-                "email@mail.ru",
+                        email,
                 "password",
                         Role.ROLE_ADMIN,
                         Role.ROLE_ADMIN))

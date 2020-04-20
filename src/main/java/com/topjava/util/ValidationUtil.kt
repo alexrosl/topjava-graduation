@@ -5,7 +5,11 @@ import com.topjava.model.isNew
 
 object ValidationUtil {
     fun <T> checkNotFoundWithId(`object`: T, id: Int): T {
-        return ValidationUtil.checkNotFound(`object`, "id=$id")
+        return checkNotFound(`object`, "id=$id")
+    }
+
+    fun checkNotFoundWithId(found: Boolean, id: Int) {
+        checkNotFound(found, "id=$id")
     }
 
     fun <T> checkNotFound(`object`: T, msg: String) : T {

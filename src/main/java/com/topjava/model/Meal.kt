@@ -1,8 +1,6 @@
 package com.topjava.model
 
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 class Meal : AbstractBaseEntity {
     var dateTime: LocalDateTime? = null
@@ -15,5 +13,14 @@ class Meal : AbstractBaseEntity {
         this.dateTime = dateTime
         this.description = description
         this.calories = calories
+    }
+
+    override fun toString(): String {
+        return "Meal{" +
+                "id=" + id +
+                ", dateTime=" + dateTime +
+                ", description='" + description + '\'' +
+                ", calories=" + calories +
+                '}'
     }
 }
