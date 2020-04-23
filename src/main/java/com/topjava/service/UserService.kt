@@ -7,6 +7,7 @@ import com.topjava.util.ValidationUtil.checkNotFound
 import com.topjava.util.ValidationUtil.checkNotFoundWithId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.util.Assert
 
 @Service
 class UserService {
@@ -15,6 +16,7 @@ class UserService {
     private lateinit var repository: UserRepository
 
     fun create(user: User): User? {
+        Assert.notNull(user, "user must not be null")
         return repository.save(user)
     }
 
@@ -30,6 +32,7 @@ class UserService {
 
     @Throws(NotFoundException::class)
     fun getByEmail(email: String): User? {
+        Assert.notNull(email, "email must not be null")
         return checkNotFound(repository.getByEmail(email), "email=$email")
     }
 
@@ -38,6 +41,7 @@ class UserService {
     }
 
     fun update(user: User) {
+        Assert.notNull(user, "user must not be null")
         checkNotFoundWithId(repository.save(user), user.id!!)
     }
 }

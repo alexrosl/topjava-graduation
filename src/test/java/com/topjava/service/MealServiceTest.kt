@@ -73,7 +73,12 @@ class MealServiceTest {
         val betweenDates = service.getBetweenDates(
                 LocalDate.of(2015, Month.MAY, 30),
                 LocalDate.of(2015, Month.MAY, 30), USER_ID)
-        assertMatch(betweenDates, listOf(MEAL4, MEAL3, MEAL2, MEAL1))
+        assertMatch(betweenDates, listOf(MEAL3, MEAL2, MEAL1))
+    }
+
+    @Test
+    fun testGetBetweenWithNullDates() {
+        assertMatch(service.getBetweenDates(null, null, USER_ID), MEALS)
     }
 
     @Test

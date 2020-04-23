@@ -2,12 +2,11 @@ package com.topjava.service
 
 import com.topjava.model.Meal
 import com.topjava.repository.MealRepository
-import com.topjava.util.DateTimeUtil
 import com.topjava.util.ValidationUtil.checkNotFoundWithId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.util.Assert
 import java.time.LocalDate
-import java.time.LocalTime
 
 @Service
 class MealService() {
@@ -24,9 +23,9 @@ class MealService() {
     }
 
     fun getBetweenDates(startDate: LocalDate?, endDate: LocalDate?, userId: Int): List<Meal> {
-        return repository.getBetween(
-                DateTimeUtil.createDateTime(startDate, LocalDate.MIN, LocalTime.MIN),
-                DateTimeUtil.createDateTime(endDate, LocalDate.MAX, LocalTime.MAX),
+        return repository.getBetweenInclusive(
+                startDate,
+                endDate,
                 userId
         )
     }
@@ -36,10 +35,12 @@ class MealService() {
     }
 
     fun update(meal: Meal, userId: Int) {
+        Assert.notNull(meal, "meal must not be null")
         checkNotFoundWithId(repository.save(meal, userId), meal.id!!)
     }
 
     fun create(meal: Meal, userId: Int): Meal? {
+        Assert.notNull(meal, "meal must not be null")
         return repository.save(meal, userId)
     }
 }

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.dao.DataAccessException
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.context.jdbc.SqlConfig
@@ -31,7 +32,7 @@ class UserServiceTest {
 
     @Test
     fun create() {
-        val newUser = User(null, "New", "new@gmail.com", "pass", 1555, false, Date(), listOf(Role.ROLE_USER))
+        val newUser = User(null, "New", "new@gmail.com", "password", 1555, false, Date(), listOf(Role.ROLE_USER))
         val created = service.create(newUser)
         newUser.id = created!!.id
         UserTestData.assertMatch(service.get(created.id!!)!!, newUser)
@@ -39,8 +40,8 @@ class UserServiceTest {
 
     @Test
     fun duplicateEmailCreate() {
-        Assertions.assertThrows(DuplicateKeyException::class.java)
-        { service.create(User(null, "Duplicate", "email@mail.ru", "passss", Role.ROLE_USER)) }
+        assertThrows(DataAccessException::class.java)
+        { service.create(User(null, "Duplicate", "email@mail.ru", "passsswrod", Role.ROLE_USER)) }
     }
 
     @Test

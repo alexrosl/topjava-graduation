@@ -16,9 +16,9 @@ fun main() {
     appCtx.use {
         println(appCtx.beanDefinitionNames.contentToString())
 
-        val jdbcMealRepository = appCtx.getBean(JdbcMealRepository::class.java)
-        val allMealsForUser = jdbcMealRepository.getAll(100000)
-        println(allMealsForUser)
+//        val jdbcMealRepository = appCtx.getBean(JdbcMealRepository::class.java)
+//        val allMealsForUser = jdbcMealRepository.getAll(100000)
+//        println(allMealsForUser)
 
         val adminRestController = appCtx.getBean(AdminRestController::class.java)
         val email = "autotest${Random().nextInt(1000).toString()}@mail.ru"
