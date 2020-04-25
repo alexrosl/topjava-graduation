@@ -8,4 +8,7 @@ interface UserRepository {
     fun get(id: Int): User?
     fun getByEmail(email: String): User?
     fun getAll(): List<User>
+    fun getWithMeals(id: Int): User? {
+        throw UnsupportedOperationException()
+    }
 }

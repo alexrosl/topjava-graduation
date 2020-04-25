@@ -44,4 +44,8 @@ class UserService {
         Assert.notNull(user, "user must not be null")
         checkNotFoundWithId(repository.save(user), user.id!!)
     }
+
+    fun getWithMeals(id: Int): User? {
+        return checkNotFoundWithId(repository.getWithMeals(id), id)
+    }
 }

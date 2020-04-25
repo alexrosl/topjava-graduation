@@ -54,8 +54,8 @@ class MealRestController {
         service.update(meal, userId)
     }
 
-    fun getBetween(startDate: LocalDate?, startTime: LocalTime?,
-                    endDate: LocalDate?, endTime: LocalTime?) : List<MealTo> {
+    fun getBetween(startDate: LocalDate, startTime: LocalTime,
+                    endDate: LocalDate, endTime: LocalTime) : List<MealTo> {
         val userId = SecurityUtil.authUserId()
         logger.info("getBetween dates ($startDate - $endDate) time ($startTime - $endTime) for user $userId")
 

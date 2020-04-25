@@ -8,6 +8,7 @@ import com.topjava.util.DateTimeUtil
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
@@ -55,11 +56,11 @@ open class JpaMealRepository : MealRepository {
                 .resultList
     }
 
-    override fun getBetweenInclusive(startDate: LocalDate?, endDate: LocalDate?, userId: Int): List<Meal> {
+    override fun getBetweenInclusive(startDate: LocalDateTime?, endDate: LocalDateTime?, userId: Int): List<Meal> {
         return em.createNamedQuery(Meal.GET_BETWEEN, Meal::class.java)
                 .setParameter("userId", userId)
-                .setParameter("startDate", DateTimeUtil.getStartInclusive(startDate))
-                .setParameter("endDate", DateTimeUtil.getEndInclusive(endDate))
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
                 .resultList
     }
 

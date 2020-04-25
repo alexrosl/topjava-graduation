@@ -30,19 +30,19 @@ object DateTimeUtil {
         }
     }
 
-    fun getStartInclusive(localDate: LocalDate?): LocalDateTime? {
+    fun getStartInclusive(localDate: LocalDate?): LocalDateTime {
         return startOfDay(localDate ?: MIN_DATE)
     }
 
     fun getEndInclusive(localDate: LocalDate?): LocalDateTime {
-        return startOfDay(if (localDate != null) localDate.plus(1, ChronoUnit.DAYS) else MAX_DATE)!!
+        return startOfDay(if (localDate != null) localDate.plus(1, ChronoUnit.DAYS) else MAX_DATE)
     }
 
     fun createDateTime(date: LocalDate?, defaultDate: LocalDate, time: LocalTime): LocalDateTime? {
         return LocalDateTime.of( date ?: defaultDate, time)
     }
 
-    fun startOfDay(localDate: LocalDate): LocalDateTime? {
+    fun startOfDay(localDate: LocalDate): LocalDateTime {
         return LocalDateTime.of(localDate, LocalTime.MIN)
     }
 }

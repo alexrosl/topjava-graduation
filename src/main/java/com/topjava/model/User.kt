@@ -14,6 +14,8 @@ import javax.persistence.FetchType
 import javax.persistence.JoinColumn
 import javax.persistence.NamedQueries
 import javax.persistence.NamedQuery
+import javax.persistence.OneToMany
+import javax.persistence.OrderBy
 import javax.persistence.Table
 import javax.persistence.UniqueConstraint
 import javax.validation.constraints.Email
@@ -62,6 +64,10 @@ class User : AbstractNamedEntity {
     @Column(name = "calories_per_day", nullable = false, columnDefinition = "int default 2000")
     @Range(min = 10, max = 10000)
     var caloriesPerDay = DEFAULT_CALORIES_PER_DAY
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OrderBy("dateTime DESC")
+    var meals: MutableList<Meal>? = null
 
     constructor() {}
     constructor(u: User) : this(u.id, u.name, u.email, u.password, u.caloriesPerDay, u.enabled, u.registered, u.roles) {}

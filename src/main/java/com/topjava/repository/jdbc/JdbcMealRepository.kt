@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.annotation.PostConstruct
 
 @Repository
@@ -74,9 +75,9 @@ class JdbcMealRepository : MealRepository {
                 "SELECT * FROM meals WHERE user_id = ? ORDER BY date_time DESC", ROW_MAPPER, userId)
     }
 
-    override fun getBetweenInclusive(startDate: LocalDate?, endDate: LocalDate?, userId: Int): List<Meal> {
+    override fun getBetweenInclusive(startDate: LocalDateTime?, endDate: LocalDateTime?, userId: Int): List<Meal> {
         return jdbcTemplate.query(
-                "SELECT * FROM meals WHERE user_id=? AND date_time BETWEEN ? AND ? ORDER BY date_time DESC",
+                "SELECT * FROM meals WHERE user_id=? AND date_time >= ? AND date_time < ? ORDER BY date_time DESC",
                 ROW_MAPPER, userId, startDate, endDate
         )
     }

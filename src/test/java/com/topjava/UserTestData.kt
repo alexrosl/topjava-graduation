@@ -13,10 +13,10 @@ object UserTestData {
     val ADMIN = User(ADMIN_ID, "admin", "admin@mail.ru", "admin", Role.ROLE_ADMIN)
 
     fun assertMatch(actual: User, expected: User) {
-        Assertions.assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "roles")
+        Assertions.assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "roles", "meals")
     }
 
     fun assertMatch(actual: Iterable<User>, expected: Iterable<User?>?) {
-        Assertions.assertThat(actual).usingElementComparatorIgnoringFields("registered", "roles").isEqualTo(expected)
+        Assertions.assertThat(actual).usingElementComparatorIgnoringFields("registered", "roles", "meals").isEqualTo(expected)
     }
 }
