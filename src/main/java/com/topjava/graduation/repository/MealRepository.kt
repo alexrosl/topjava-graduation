@@ -11,7 +11,7 @@ interface MealRepository {
     fun get(id: Int, userId: Int): Meal?
     fun getAll(userId: Int): List<Meal>
     fun getBetweenInclusive(startDate: LocalDate?, endDate: LocalDate?, userId: Int): List<Meal> {
-        return getBetweenInclusive(DateTimeUtil.getStartInclusive(startDate), DateTimeUtil.getEndInclusive(endDate), userId)
+        return getBetweenInclusive(DateTimeUtil.getStartInclusive(startDate), DateTimeUtil.getEndExclusive(endDate), userId)
     }
     fun getBetweenInclusive(startDate: LocalDateTime?, endDate: LocalDateTime?, userId: Int): List<Meal>
     fun getWithUser(id: Int, userId: Int): Meal? {

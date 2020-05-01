@@ -9,8 +9,8 @@ import java.time.temporal.ChronoUnit
 
 object DateTimeUtil {
     private val DATE_TIME_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")!!
-    private val MIN_DATE = LocalDate.of(1, 1, 1)
-    private val MAX_DATE = LocalDate.of(3000, 1, 1)
+    private val MIN_DATE = LocalDateTime.of(1, 1, 1, 0, 0)
+    private val MAX_DATE = LocalDateTime.of(3000, 1, 1, 0, 0)
 
     fun toString(ldt: LocalDateTime?): String = if (ldt == null) "" else ldt.format(DATE_TIME_FORMATTER)
 
@@ -31,18 +31,14 @@ object DateTimeUtil {
     }
 
     fun getStartInclusive(localDate: LocalDate?): LocalDateTime {
-        return startOfDay(localDate ?: MIN_DATE)
+        return localDate?.atStartOfDay() ?: MIN_DATE
     }
 
-    fun getEndInclusive(localDate: LocalDate?): LocalDateTime {
-        return startOfDay(if (localDate != null) localDate.plus(1, ChronoUnit.DAYS) else MAX_DATE)
-    }
-
-    fun createDateTime(date: LocalDate?, defaultDate: LocalDate, time: LocalTime): LocalDateTime? {
-        return LocalDateTime.of( date ?: defaultDate, time)
-    }
-
-    fun startOfDay(localDate: LocalDate): LocalDateTime {
-        return LocalDateTime.of(localDate, LocalTime.MIN)
+    fun getEndExclusive(localDate: LocalDate?): LocalDateTime {
+        return if (localDate != null) {
+            localDate.plus(1, ChronoUnit.DAYS).atStartOfDay()
+        } else {
+            MAX_DATE
+        }
     }
 }

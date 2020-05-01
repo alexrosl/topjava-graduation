@@ -17,17 +17,17 @@ object MealsUtil {
 
     private fun getFiltered(meals: Collection<Meal>, caloriesPerDay: Int, predicate: (Meal) -> Boolean): List<MealTo> {
         val caloriesSumByDate =
-                meals.groupBy { it.dateTime }
+                meals.groupBy { it.dateTime?.toLocalDate() }
                         .mapValues { entry ->
-                            entry.value.map { it.calories!! }.sum()
+                            entry.value.map { it.calories }.sum()
                         }
         return meals
                 .filter ( predicate )
-                .map { createTo(it, caloriesSumByDate.getValue(it.dateTime) > caloriesPerDay) }
+                .map { createTo(it, caloriesSumByDate.getValue(it.dateTime?.toLocalDate()) > caloriesPerDay) }
     }
 
-    private fun createTo(meal: Meal, excess: Boolean): MealTo {
-        return MealTo(meal.id, meal.dateTime!!, meal.description!!, meal.calories!!, excess)
+    fun createTo(meal: Meal, excess: Boolean): MealTo {
+        return MealTo(meal.id, meal.dateTime!!, meal.description!!, meal.calories, excess)
     }
 
 }

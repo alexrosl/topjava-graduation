@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping(ProfileRestController.REST_URL)
+@RequestMapping(value =  [ProfileRestController.REST_URL])
 class ProfileRestController : AbstractUserController() {
 
     companion object {
-        const val REST_URL = "rest/profile"
+        const val REST_URL = "/rest/profile"
     }
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])

@@ -40,6 +40,7 @@ class MealRestController : AbstractMealController() {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     override fun delete(@PathVariable id: Int) {
         super.delete(id)
     }
