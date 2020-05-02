@@ -3,6 +3,7 @@ package com.topjava.graduation.repository.jpa
 import com.topjava.graduation.model.User
 import com.topjava.graduation.model.isNew
 import com.topjava.graduation.repository.UserRepository
+import org.hibernate.jpa.QueryHints
 import org.springframework.dao.support.DataAccessUtils
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
@@ -40,6 +41,7 @@ open class JpaUserRepository : UserRepository {
     override fun getByEmail(email: String): User? {
         val resultList = em.createNamedQuery(User.BY_EMAIL, User::class.java)
                 .setParameter(1, email)
+                .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
                 .resultList
         return DataAccessUtils.singleResult(resultList)
     }

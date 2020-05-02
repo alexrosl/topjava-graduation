@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -59,5 +60,11 @@ class AdminRestController : AbstractUserController() {
     @GetMapping("/by")
     override fun getByMail(@RequestParam email: String): User? {
         return super.getByMail(email)
+    }
+
+    @PatchMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    override fun enable(@PathVariable id: Int, @RequestParam enabled: Boolean) {
+        super.enable(id, enabled)
     }
 }

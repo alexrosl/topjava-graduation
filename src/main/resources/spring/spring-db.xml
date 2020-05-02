@@ -60,7 +60,7 @@
     <beans profile="jpa,datajpa">
         <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
               p:dataSource-ref="dataSource"
-              p:packagesToScan="com.topjava.**.model">
+              p:packagesToScan="com.topjava.graduation.**.model">
 
             <property name="jpaPropertyMap">
                 <map>
@@ -89,11 +89,11 @@
     </beans>
 
     <beans profile="jpa">
-        <context:component-scan base-package="com.topjava.**.repository.jpa" />
+        <context:component-scan base-package="com.topjava.graduation.**.repository.jpa" />
     </beans>
 
     <beans profile="datajpa">
         <context:component-scan base-package="com.topjava.**.repository.datajpa"/>
-        <jpa:repositories base-package="com.topjava.**.repository.datajpa"/>
+        <jpa:repositories base-package="com.topjava.graduation.**.repository.datajpa"/>
     </beans>
 </beans>

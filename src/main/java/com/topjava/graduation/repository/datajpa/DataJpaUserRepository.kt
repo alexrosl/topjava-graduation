@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository
 class DataJpaUserRepository : UserRepository {
     companion object {
         private val SORT_NAME_EMAIL = Sort.by(Sort.Direction.ASC, "name", "email")
-
     }
 
     @Autowired

@@ -5,7 +5,6 @@ import com.topjava.graduation.model.isNew
 import com.topjava.graduation.repository.MealRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Repository
@@ -30,7 +29,7 @@ class DataJpaMealRepository : MealRepository {
     }
 
     override fun get(id: Int, userId: Int): Meal? {
-        return crudMealRepository.getWithUser(id, userId)
+        return crudMealRepository.findById(id).filter { it.user?.id == userId }.orElse(null)
     }
 
     override fun getAll(userId: Int): List<Meal> {

@@ -2,6 +2,11 @@ package com.topjava.graduation.util
 
 import com.topjava.graduation.model.AbstractBaseEntity
 import com.topjava.graduation.model.isNew
+import org.springframework.http.ResponseEntity
+import org.springframework.validation.BindingResult
+
+import javax.validation.*
+
 
 object ValidationUtil {
     fun <T> checkNotFoundWithId(`object`: T, id: Int): T {
@@ -35,6 +40,27 @@ object ValidationUtil {
         } else if (entity.id != id) {
             throw IllegalArgumentException("$entity must be with id=$id")
         }
+    }
+
+    private var validator: Validator
+
+    init {
+        val factory = Validation.buildDefaultValidatorFactory()
+        validator = factory.validator
+    }
+
+    fun <T> validate(bean: T) {
+        val violations = validator.validate(bean)
+        if (violations.isNotEmpty()) {
+            throw ConstraintViolationException(violations)
+        }
+    }
+
+    fun getErrorResponse(result: BindingResult): ResponseEntity<String> {
+        return ResponseEntity.unprocessableEntity().body(
+                result.fieldErrors
+                        .joinToString(separator = "<br>") { "[${it.field}] ${it.defaultMessage}" }
+        )
     }
 }
 

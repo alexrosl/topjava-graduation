@@ -9,7 +9,7 @@ import org.springframework.util.Assert
 import java.time.LocalDate
 
 @Service
-class MealService() {
+open class MealService() {
 
     @Autowired
     private lateinit var repository: MealRepository

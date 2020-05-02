@@ -6,6 +6,7 @@ import com.topjava.graduation.MealTestData.MEAL1_ID
 import com.topjava.graduation.MealTestData.MEAL5
 import com.topjava.graduation.MealTestData.MEALS
 import com.topjava.graduation.MealTestData.assertMatch
+import com.topjava.graduation.MealToUtil
 import com.topjava.graduation.TestUtil
 import com.topjava.graduation.TestUtil.readFromJsonMvcResult
 import com.topjava.graduation.UserTestData.USER
@@ -90,8 +91,9 @@ class MealRestControllerTest : AbstractControllerTest() {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect() {
                     result ->
-                    assertThat(TestUtil.readListFromJsonMvcResult(result, MealTo::class.java))
-                            .isEqualTo(MealsUtil.getTos(MEALS, USER.caloriesPerDay))}
+                    MealToUtil.assertMatch(TestUtil.readListFromJsonMvcResult(result, MealTo::class.java),
+                            MealsUtil.getTos(MEALS, USER.caloriesPerDay))
+                }
     }
 
     @Test
@@ -103,8 +105,9 @@ class MealRestControllerTest : AbstractControllerTest() {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect() {
                     result ->
-                    assertThat(TestUtil.readListFromJsonMvcResult(result, MealTo::class.java))
-                            .isEqualTo(listOf(MealsUtil.createTo(MEAL5, true), MealsUtil.createTo(MEAL1, false)))
+                    MealToUtil.assertMatch(TestUtil.readListFromJsonMvcResult(result, MealTo::class.java),
+                            listOf(MealsUtil.createTo(MEAL5, true), MealsUtil.createTo(MEAL1, false))
+                    )
                 }
     }
 
@@ -114,8 +117,8 @@ class MealRestControllerTest : AbstractControllerTest() {
                 .andExpect(status().isOk)
                 .andExpect() {
                     result ->
-                    assertThat(TestUtil.readListFromJsonMvcResult(result, MealTo::class.java))
-                            .isEqualTo(MealsUtil.getTos(MEALS, USER.caloriesPerDay))
+                    MealToUtil.assertMatch(TestUtil.readListFromJsonMvcResult(result, MealTo::class.java),
+                            MealsUtil.getTos(MEALS, USER.caloriesPerDay))
                 }
     }
 }

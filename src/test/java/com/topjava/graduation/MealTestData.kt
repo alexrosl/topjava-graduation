@@ -2,10 +2,10 @@ package com.topjava.graduation
 
 import com.topjava.graduation.model.AbstractBaseEntity.Companion.START_SEQ
 import com.topjava.graduation.model.Meal
+import com.topjava.graduation.to.MealTo
+import org.assertj.core.api.Assertions.assertThat
 import java.time.LocalDateTime
 import java.time.Month
-
-import org.assertj.core.api.Assertions.assertThat
 
 
 object MealTestData {
@@ -29,6 +29,16 @@ object MealTestData {
     }
 
     fun assertMatch(actual: Iterable<Meal>, expected: Iterable<Meal?>?) {
+        assertThat(actual).usingElementComparatorIgnoringFields("user").isEqualTo(expected)
+    }
+}
+
+object MealToUtil {
+    fun assertMatch(actual: MealTo, expected: MealTo) {
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "user")
+    }
+
+    fun assertMatch(actual: Iterable<MealTo>, expected: Iterable<MealTo?>?) {
         assertThat(actual).usingElementComparatorIgnoringFields("user").isEqualTo(expected)
     }
 }

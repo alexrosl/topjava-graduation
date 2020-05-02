@@ -16,7 +16,7 @@ interface CrudUserRepository : JpaRepository<User, Int> {
     fun delete(@Param("id") id: Int): Int
     fun getByEmail(email: String?): User?
 
-    @EntityGraph(attributePaths = ["meals", "roles"])
+    @EntityGraph(attributePaths = ["meals"], type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT u FROM User u WHERE u.id=?1")
     fun getWithMeals(id: Int): User?
 }

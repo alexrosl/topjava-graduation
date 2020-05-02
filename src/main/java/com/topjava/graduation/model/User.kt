@@ -87,7 +87,7 @@ class User : AbstractNamedEntity {
         setRoles(roles)
     }
 
-    private fun setRoles(roles: Collection<Role>?) {
+    fun setRoles(roles: Collection<Role>?) {
         this.roles = if (CollectionUtils.isEmpty(roles)) EnumSet.noneOf(Role::class.java) else EnumSet.copyOf(roles)
     }
 

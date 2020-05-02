@@ -13,7 +13,7 @@ import java.util.*
 abstract class AbstractUserServiceTest : AbstractServiceTest() {
 
     @Autowired
-    lateinit var service: UserService
+    protected lateinit var service: UserService
 
     @Test
     fun create() {

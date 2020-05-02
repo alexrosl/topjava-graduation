@@ -45,4 +45,9 @@ abstract class AbstractUserController {
         logger.info("getByEmail $email")
         return service.getByEmail(email)
     }
+
+    open fun enable(id: Int, enabled: Boolean) {
+        logger.info(if (enabled) "enable {$id}" else "disable {$id}")
+        service.enable(id, enabled)
+    }
 }

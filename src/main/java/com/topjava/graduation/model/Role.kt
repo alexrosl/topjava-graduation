@@ -1,6 +1,12 @@
 package com.topjava.graduation.model
 
-enum class Role {
+import org.springframework.security.core.GrantedAuthority
+
+enum class Role : GrantedAuthority {
     ROLE_USER,
-    ROLE_ADMIN
+    ROLE_ADMIN;
+
+    override fun getAuthority(): String {
+        return name
+    }
 }

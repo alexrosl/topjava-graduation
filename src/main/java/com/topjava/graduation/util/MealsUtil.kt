@@ -27,7 +27,7 @@ object MealsUtil {
     }
 
     fun createTo(meal: Meal, excess: Boolean): MealTo {
-        return MealTo(meal.id, meal.dateTime!!, meal.description!!, meal.calories, excess)
+        return MealTo(meal.id!!, meal.dateTime!!, meal.description!!, meal.calories, excess)
     }
 
 }
