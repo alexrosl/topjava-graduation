@@ -77,7 +77,8 @@ class User : AbstractNamedEntity {
 
     constructor() {}
     constructor(u: User) : this(u.id, u.name, u.email, u.password, u.caloriesPerDay, u.enabled, u.registered, u.roles) {}
-    constructor(id: Int?, name: String?, email: String?, password: String?, role: Role?, vararg roles: Role?) : this(id, name, email, password, DEFAULT_CALORIES_PER_DAY, true, Date(), EnumSet.of(role, *roles)) {}
+    constructor(id: Int?, name: String?, email: String?, password: String?, role: Role?, vararg roles: Role?) : this(id, name, email, password, DEFAULT_CALORIES_PER_DAY, true, Date(), EnumSet.of(role, *roles))
+    constructor(id: Int?, name: String?, email: String?, password: String?, caloriesPerDay: Int?, role: Role?, vararg  roles: Role?) : this(id, name, email, password, caloriesPerDay!!, true, Date(), EnumSet.of(role, *roles))
     constructor(id: Int?, name: String?, email: String?, password: String?, caloriesPerDay: Int, enabled: Boolean, registered: Date, roles: Collection<Role>?) : super(id, name) {
         this.email = email
         this.password = password

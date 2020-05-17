@@ -42,16 +42,12 @@ class MealUIController : AbstractMealController() {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    fun createOrUpdate(@Valid meal: Meal, result: BindingResult): ResponseEntity<String> {
-        if (result.hasErrors()) {
-            return ValidationUtil.getErrorResponse(result)
-        }
+    fun createOrUpdate(@Valid meal: Meal) {
         if (meal.isNew()) {
             super.create(meal)
         } else {
             super.update(meal, meal.id!!)
         }
-        return ResponseEntity.ok().build()
     }
 
     @GetMapping(value = ["/filter"], produces = [MediaType.APPLICATION_JSON_VALUE])

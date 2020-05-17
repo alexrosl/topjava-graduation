@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.time.LocalDate
 import java.time.LocalTime
+import javax.validation.Valid
 
 @RestController
 @RequestMapping(value = [MealRestController.REST_URL], produces = [MediaType.APPLICATION_JSON_VALUE])
@@ -52,12 +53,12 @@ class MealRestController : AbstractMealController() {
 
     @PutMapping(value = ["/{id}"], consumes = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    override fun update(@RequestBody meal: Meal, @PathVariable id: Int) {
+    override fun update(@Valid @RequestBody meal: Meal, @PathVariable id: Int) {
         super.update(meal, id)
     }
 
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun createWithLocation(@RequestBody meal: Meal): ResponseEntity<Meal> {
+    fun createWithLocation(@Valid @RequestBody meal: Meal): ResponseEntity<Meal> {
         val created = super.create(meal)
 
         val uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()

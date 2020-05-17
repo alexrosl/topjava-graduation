@@ -11,6 +11,7 @@ import com.topjava.graduation.UserTestData.assertMatch
 import com.topjava.graduation.model.Role
 import com.topjava.graduation.model.User
 import com.topjava.graduation.service.UserService
+import com.topjava.graduation.util.ErrorType
 import com.topjava.graduation.util.NotFoundException
 import com.topjava.graduation.web.AbstractControllerTest
 import com.topjava.graduation.web.json.JsonUtil
@@ -18,8 +19,10 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.util.*
@@ -72,6 +75,19 @@ class AdminRestControllerTest : AbstractControllerTest() {
                 .andExpect(status().isNoContent)
 
         assertMatch(userService.get(USER_ID)!!, updated)
+    }
+
+    @Test
+    fun testUpdateInvalid() {
+        val updated = User(USER)
+        updated.name = ""
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updated)!!)
+                .with(SecurityMockMvcRequestPostProcessors.httpBasic(ADMIN.email, ADMIN.password)))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name))
+
     }
 
     @Test

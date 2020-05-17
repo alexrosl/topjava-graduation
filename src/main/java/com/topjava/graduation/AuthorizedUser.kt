@@ -10,7 +10,7 @@ class AuthorizedUser(user: User) : org.springframework.security.core.userdetails
         private const val serialVersionUID = 1L
     }
 
-    private var userTo: UserTo
+    var userTo: UserTo
 
     init {
         this.userTo = asTo(user)

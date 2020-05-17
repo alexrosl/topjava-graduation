@@ -4,8 +4,9 @@ import com.topjava.graduation.model.AbstractBaseEntity
 import com.topjava.graduation.model.isNew
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
-
-import javax.validation.*
+import javax.validation.ConstraintViolationException
+import javax.validation.Validation
+import javax.validation.Validator
 
 
 object ValidationUtil {
@@ -42,6 +43,19 @@ object ValidationUtil {
         }
     }
 
+    fun getRootCause(t: Throwable?): Throwable {
+        var result = t
+        var cause: Throwable?
+        while (null != result?.cause.also { cause = it } && result !== cause) {
+            result = cause
+        }
+        return result!!
+    }
+
+    fun getMessage(e: Throwable): String? {
+        return e.localizedMessage ?: e.javaClass.name
+    }
+
     private var validator: Validator
 
     init {
@@ -65,3 +79,18 @@ object ValidationUtil {
 }
 
 class NotFoundException(message: String) : RuntimeException(message)
+
+class IllegalRequestDataException(message: String) : java.lang.RuntimeException(message)
+
+enum class ErrorType{
+    APP_ERROR,
+    DATA_NOT_FOUND,
+    DATA_ERROR,
+    VALIDATION_ERROR
+}
+
+class ErrorInfo(
+        val url: String,
+        val type: ErrorType,
+        val details: List<String?>
+)

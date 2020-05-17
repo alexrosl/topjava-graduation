@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import javax.validation.Valid
 
 @RestController
 @RequestMapping(value = [AdminRestController.REST_URL], produces = [MediaType.APPLICATION_JSON_VALUE])
@@ -37,7 +38,7 @@ class AdminRestController : AbstractUserController() {
     }
 
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun createWithLocation(@RequestBody user: User): ResponseEntity<User> {
+    fun createWithLocation(@Valid @RequestBody user: User): ResponseEntity<User> {
         val created = super.create(user)
         val uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("$REST_URL/{id}")
@@ -53,7 +54,7 @@ class AdminRestController : AbstractUserController() {
 
     @PutMapping(value = ["/{id}"], consumes = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    override fun update(@RequestBody user: User, @PathVariable id: Int) {
+    override fun update(@Valid @RequestBody user: User, @PathVariable id: Int) {
         super.update(user, id)
     }
 

@@ -2,9 +2,12 @@ package com.topjava.graduation.web.user
 
 import com.topjava.graduation.model.User
 import com.topjava.graduation.service.UserService
+import com.topjava.graduation.to.UserTo
+import com.topjava.graduation.util.UserUtil
 import com.topjava.graduation.util.ValidationUtil
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.WebDataBinder
 
 abstract class AbstractUserController {
     companion object {
@@ -22,6 +25,11 @@ abstract class AbstractUserController {
     open fun get(id: Int): User? {
         logger.info("get $id")
         return service.get(id)
+    }
+
+    fun create(userTo: UserTo): User? {
+        logger.info("create from to $userTo")
+        return create(UserUtil.createNewFromTo(userTo))
     }
 
     fun create(user: User): User? {

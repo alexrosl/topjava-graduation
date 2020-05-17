@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/ajax/admin/users")
@@ -28,7 +29,7 @@ class AdminUIController : AbstractUserController() {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    override fun delete(@PathVariable id: Int) {
+    override fun delete(@Valid @PathVariable id: Int) {
         super.delete(id)
     }
 

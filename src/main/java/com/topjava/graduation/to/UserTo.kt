@@ -8,8 +8,9 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
 
 class UserTo : BaseTo, Serializable {
-
-    private val serialVersionUID = 1L
+    companion object {
+        private val serialVersionUID = 1L
+    }
 
     @NotBlank
     @Size(min = 2, max = 100)
